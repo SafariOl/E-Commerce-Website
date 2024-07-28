@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: satoshi-reg;
+  src: url("../fonts/satoshi/Satoshi-Regular.woff");
+}
+@font-face {
+  font-family: satoshi-med;
+  src: url("../fonts/satoshi/Satoshi-Medium.woff");
+}
+@font-face {
+  font-family: satoshi-bold;
+  src: url("../fonts/satoshi/Satoshi-Bold.woff");
+}
+@font-face {
+  font-family: integral-reg;
+  src: url("../fonts/integral-cf/IntegralCF-Regular.woff");
+}
+@font-face {
+  font-family: integral-med;
+  src: url("../fonts/integral-cf/IntegralCF-Medium.woff");
+}
+@font-face {
+  font-family: integral-bold;
+  src: url("../fonts/integral-cf/IntegralCF-Bold.woff");
+}
+body {
+  background: #f2f0f1;
+  font-family: satoshi-reg, sans-serif;
+}/*# sourceMappingURL=style.css.map */
