@@ -7,6 +7,9 @@ import HomeItemSec from "./components/HomeItemSec";
 import { Provider } from "react-redux";
 import { store } from "./lib/store";
 import GenderItemsSelection from "./components/GenderItemsSelection";
+import { useLayoutEffect } from "react";
+import { useAppDispatch } from "./lib/hooks";
+import { refresh } from "./lib/thunks/customerThunks";
 
 const utilsForItemsSections = [
   {
@@ -20,9 +23,12 @@ const utilsForItemsSections = [
 ]
 
 export default function Home() {
-
+  const dispatch = useAppDispatch()
+  useLayoutEffect(() => {
+    dispatch(refresh())
+  })
   return (
-    <Provider store={store}>
+    <>
       <GenderItemsSelection />
       <main>
         <TitleBlock />
@@ -35,6 +41,6 @@ export default function Home() {
         <BrowseDressStyleBunner />
         <ReviewsBunner />
       </main>
-    </Provider>
+    </>
   );
 }

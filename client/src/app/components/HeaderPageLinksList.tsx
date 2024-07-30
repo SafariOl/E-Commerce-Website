@@ -1,9 +1,9 @@
 import { Box, Link } from '@mui/material'
 import React from 'react'
-import { pages } from './Header';
 import SearchIcon from '@mui/icons-material/Search';
 import HeaderShopAccord from './HeaderShopAccord';
 import { SearchBox, SearchIconWrapper, StyledInputBase } from '../utils/classes';
+import { pages } from '../utils/lists';
 
 interface IProp {
     handleCloseNavMenu: () => void

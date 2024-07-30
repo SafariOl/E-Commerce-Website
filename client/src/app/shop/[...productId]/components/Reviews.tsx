@@ -1,19 +1,24 @@
-import { IReview } from '@/app/lib/slices/ShopReducer'
+import { IReview } from '@/app/interfaces/Product'
+import { useAppSelector } from '@/app/lib/hooks'
 import { Box, Button, Grid, Rating, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { FaCircleCheck } from 'react-icons/fa6'
+import ReviewAdding from './ReviewAdding'
 
 interface IProp {
-    reviews: IReview[] | null | undefined
+    reviews: IReview[] | null
+    product_id: string
 }
 
-export default function Reviews({reviews}:IProp) {
+export default function Reviews({reviews, product_id}:IProp) {
     const [loadedReviews, setLoadedReviews] = useState(4)
+    const customer = useAppSelector(state => state.customer.customer)
     const handleMoreReviews = () => {
         if(reviews && reviews.length < loadedReviews + 4)
             return setLoadedReviews(prev => prev += reviews.length - loadedReviews)
         setLoadedReviews(prev => prev += 4)
     }
+    const [isWriteReview, setIsWriteReview] = useState(false)
 
   return (
     <Box sx={{
@@ -32,7 +37,7 @@ export default function Reviews({reviews}:IProp) {
             mb: 4
         }}>
             <Typography variant='h3' fontSize={{md: '24px', xs: '20px'}}>All Reviews <span style={{opacity: .6}}>({reviews?.length})</span></Typography>
-            <Button sx={{
+            <Button disabled={customer ? false : true} onClick={() => setIsWriteReview(true)} sx={{
                 px: {md:'20px', xs: '16px'},
                 py: {md:'16px', xs: '12px'},
                 bgcolor: '#000',
@@ -44,12 +49,13 @@ export default function Reviews({reviews}:IProp) {
                 }
             }}><Typography variant='h4' fontSize={{md: '16px', xs: '12px'}}>Write a Review</Typography></Button>
         </Box>
+        {isWriteReview && <ReviewAdding product_id={product_id} setIsWriteReview={setIsWriteReview}/>}
         <Grid container spacing={2} sx={{
                     justifyContent: 'center',
                     mb: 3,
                     px: {md: 4, xs: 0}
                 }}>
-            {reviews && reviews.slice(0, loadedReviews).map(review => 
+            {reviews !== null && reviews.slice(0, loadedReviews).map(review => 
                 <Grid item md={6} xs={12} key={review.review} p={2}>
                     <Box p={2} sx={{
                         border: '1px solid #000', 
@@ -57,7 +63,7 @@ export default function Reviews({reviews}:IProp) {
                         borderRadius: '20px'
                     }}>
                         <Rating readOnly size='medium' value={review.rate}/>
-                        <Typography variant='h4' fontWeight={700} my={'8px'} fontSize={{md: '20px', xs: '16px'}}>{review.user.substring(0, review.user.indexOf(' ') + 2)}. <FaCircleCheck style={{fill: 'green', verticalAlign: 'top'}} /></Typography>
+                        <Typography variant='h4' fontWeight={700} my={'8px'} fontSize={{md: '20px', xs: '16px'}}>{review.user} <FaCircleCheck style={{fill: 'green', verticalAlign: 'top'}} /></Typography>
                         <Typography variant='body1' fontSize={{md: '16px', xs: '12px'}} sx={{opacity: .6}}>"{review.review}"</Typography>
                     </Box>
                 </Grid>

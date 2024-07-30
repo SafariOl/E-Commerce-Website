@@ -4,8 +4,10 @@ import { Box, Typography } from '@mui/material'
 import PaginationComponent from './PaginationComponent'
 import { useAppSelector } from '@/app/lib/hooks'
 
+
 export default function ShopItems() {    
     const loading = useAppSelector(state => state.shop.loading)
+
     return (
         <>
             {loading && <Typography variant='h1'>Loading...</Typography>}

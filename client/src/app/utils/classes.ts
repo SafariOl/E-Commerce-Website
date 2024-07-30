@@ -328,14 +328,14 @@ export const genderModalText = {
     transform: "translate(-50%, -50%)",
     fontSize: {md:"2em", xs: "1.5em"},
     color: '#fff'
-  }
-  
+}
+
   export const genderModalLink = {
     width: {md: '50%', xs: '100%'},
     height: '100%',
     position: 'relative',
     overflow: 'hidden',
-  }
+}
   
   export const genderModalBox = {
     position: 'absolute', 
@@ -349,7 +349,7 @@ export const genderModalText = {
     m: '0 auto',
     borderRadius: '20px',
     overflow: 'hidden'
-  }
+}
   
   export const StyledImage = styled(Image)`
     position: absolute;
@@ -359,3 +359,17 @@ export const genderModalText = {
     object-fit: cover;
     object-position: right 50%;
   `;
+  
+export const passBtns = {
+    border: '1px solid #a6a6a6',
+    color: '#000',
+    p: '3px 1.5em',
+    textTransform: 'capitalize',
+}
+
+export const addressInputField = {
+    border: '1px solid #a6a6a6',
+    px: '10px',
+    maxWidth: '300px',
+    width: '100%'
+}

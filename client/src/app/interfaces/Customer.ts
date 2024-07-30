@@ -21,3 +21,13 @@ export interface ILogin {
     email: string
     password: string
 }
+
+export interface ICustomerName {
+    newName: string
+    customer_id: string
+}
+
+export interface ICustomerPassword {
+    customer_id: string
+    password: string
+}

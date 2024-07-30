@@ -19,14 +19,13 @@ export default function HomeItemSec({slice, title}:IProp) {
     dispatch(getSixProducts())
   }, [])
 
-
   return (
     <Box mt='72px' mb='64px' px={2} sx={directionColumnBlock}>
       <Typography variant='h1' mb={'55px'} 
         sx={{ fontSize: {md:48, xs: 32}, textAlign: 'center' }}>
           {title}
       </Typography>
-      {ProductsModul(items.slice(...slice), "")}
+      <ProductsModul items={items.slice(...slice)} gender="" />
       <Button onClick={() => dispatch(setOpen())} 
       sx={{
         textAlign: 'center', 

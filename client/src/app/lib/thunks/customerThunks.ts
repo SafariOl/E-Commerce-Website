@@ -1,5 +1,5 @@
 import $api from "@/app/http"
-import { ILogin, IRegister } from "@/app/interfaces/Customer"
+import { ICustomerName, ICustomerPassword, ILogin, IRegister } from "@/app/interfaces/Customer"
 import { API_KEY } from "@/app/utils/api"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
@@ -24,4 +24,18 @@ export const refresh = createAsyncThunk('/src/refresh', async() => {
         withCredentials: true,
     })
     return res.data
+})
+
+export const changeName = createAsyncThunk('/src/changeName', async(customerInfo:ICustomerName) => {
+    const res = await $api.post(`${API_KEY}/customers/change-name`, {...customerInfo})
+    return res.data
+})
+
+export const changePassword = createAsyncThunk('/src/changePassword', async(customerInfo:ICustomerPassword) => {
+    const res = await $api.post(`${API_KEY}/customers/change-password`, {...customerInfo})
+    return res.data
+})
+
+export const logout = createAsyncThunk('/src/logout', async() => {
+    await $api.post(`${API_KEY}/customers/logout`)
 })

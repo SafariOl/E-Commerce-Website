@@ -15,7 +15,7 @@ export const ProductModul:FC<IProp> = ({item, genderSelected}) => {
     price = Math.ceil(price)
 
   return (
-    <Grid sx={{p: '10px', mb: "36px", mx:2}} key={product_id} item xs={12} md={5} lg={4} xl={3}>
+    <>
         <Box sx={productModulBox}>
             <Link sx={productModulLink} 
                 href={`/shop/${genderSelected ? genderSelected : (gender == 'M') ? 'men' : 'women'}/${product_id}`}
@@ -49,6 +49,6 @@ export const ProductModul:FC<IProp> = ({item, genderSelected}) => {
                 </Box>
             </Link>
         </Box>
-    </Grid>
+    </>
   )
 }

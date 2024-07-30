@@ -1,8 +1,8 @@
 import { Box, IconButton, Link, Menu, MenuItem } from '@mui/material'
 import React from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
-import { pages } from './Header';
 import HeaderShopAccord from './HeaderShopAccord';
+import { pages } from '../utils/lists';
 
 interface IMenu {
     anchorElNav: HTMLElement | null,

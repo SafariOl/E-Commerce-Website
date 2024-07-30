@@ -28,7 +28,7 @@ export default function PaginationComponent()  {
 
   return (
     <>
-      {ProductsModul(items.slice((page - 1) * productsPerPage, page * productsPerPage), gender)}
+      <ProductsModul items={items.slice((page - 1) * productsPerPage, page * productsPerPage)} gender={gender}/>
       <Box sx={justifyCenterBlock}>
           <Pagination 
             count={count} 

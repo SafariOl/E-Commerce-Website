@@ -14,8 +14,14 @@ export const getProduct = createAsyncThunk('/src/getProduct', async(productId:st
     return res.data
 })
 
-export const addReview = createAsyncThunk('/src/addReview', async(reviewInfo:IReview) => {
-    await axios.post(`${API_KEY}/products/add-review`, {...reviewInfo})
+export const getReviews = createAsyncThunk('/src/getReviews', async(productId:string) => {
+    const res = await axios.get(`${API_KEY}/products/get-reviews/${productId}`)
+    return res.data
+})
+
+export const addReview = createAsyncThunk<IReview[], {product_id: string, user:string, rate: number, review: string}>('/src/addReview', async({product_id, user, rate, review}) => {
+    const res = await axios.post(`${API_KEY}/products/add-review`, {product_id, user, rate, review})
+    return res.data
 })
 
 export const getFilteredItems = createAsyncThunk('/src/getFilteredItems', async(filterInfo:IFilter) => {

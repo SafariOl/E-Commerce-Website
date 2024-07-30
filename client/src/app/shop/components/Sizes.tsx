@@ -2,7 +2,6 @@ import{ List } from '@mui/material'
 import React  from 'react'
 import SizeBtn from './SizeBtn'
 
-
 interface IProp {
     sizes: Array<string>
 }

@@ -5,6 +5,7 @@ import CustomerReducer from "./slices/CustomerSlice";
 import CheckCustRegistration from "./slices/CheckCustomerSlice";
 import CartReducer from "./slices/CartSlice";
 import GenderSelectModalSlice from "./slices/GenderSelectModalSlice";
+import AddressSlice from "./slices/AddressSlice";
 
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
       signModal: CheckCustRegistration,
       cart: CartReducer,
       genderModal: GenderSelectModalSlice,
+      address: AddressSlice,
     }
 })
 

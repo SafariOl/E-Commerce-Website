@@ -1,4 +1,4 @@
-import { Box, styled } from '@mui/material'
+import { Box } from '@mui/material'
 import IconButton from '@mui/material/IconButton';
 import React from 'react'
 import { LuShoppingCart } from "react-icons/lu";
@@ -18,7 +18,7 @@ export default function HeaderControls() {
           <LuShoppingCart fontSize={25} color='#000'/>
         </IconButton>
         <IconButton href='/account'>
-        <FaRegCircleUser fontSize={25} color='#000'/>
+          <FaRegCircleUser fontSize={25} color='#000'/>
         </IconButton>
     </Box>
   )

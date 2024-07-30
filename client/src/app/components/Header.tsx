@@ -8,10 +8,6 @@ import HeaderControls from './HeaderControls';
 import HeaderPageLinksList from './HeaderPageLinksList';
 import { logoStyle } from '../utils/classes';
 
-
-export const pages = ['On Sale', 'New Arrivals', 'Brands'];
-
-
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
@@ -24,7 +20,29 @@ export default function Header() {
   };
 
   return (
-      <Toolbar disableGutters sx={{display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
+    <Toolbar disableGutters sx={{display: 'flex', justifyContent:'space-between', alignItems: 'center'}}>
+      <Typography
+        variant="h1"
+        noWrap
+        component="a"
+        href="/"
+        sx={{
+          ...logoStyle,
+          display: { xs: 'none', md: 'flex'},
+          alignItems: 'center',
+          textAlign: 'center',
+          mb: 0,
+          mt: '-10px'
+        }}
+      >
+        SHOP.CO
+      </Typography>
+      <div style={{display: 'flex', gap: 2, alignItems: 'bottom'}}>
+        <MenuBlock 
+          handleCloseNavMenu={handleCloseNavMenu} 
+          handleOpenNavMenu={handleOpenNavMenu} 
+          anchorElNav={anchorElNav} 
+        />
         <Typography
           variant="h1"
           noWrap
@@ -32,40 +50,18 @@ export default function Header() {
           href="/"
           sx={{
             ...logoStyle,
-            display: { xs: 'none', md: 'flex'},
+            display: { xs: 'flex', md: 'none' },
             alignItems: 'center',
-            textAlign: 'center',
+            flexGrow: 1,
             mb: 0,
-            mt: '-10px'
+            mt: '-5px'
           }}
         >
           SHOP.CO
         </Typography>
-        <div style={{display: 'flex', gap: 2, alignItems: 'bottom'}}>
-          <MenuBlock 
-            handleCloseNavMenu={handleCloseNavMenu} 
-            handleOpenNavMenu={handleOpenNavMenu} 
-            anchorElNav={anchorElNav} 
-          />
-          <Typography
-            variant="h1"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              ...logoStyle,
-              display: { xs: 'flex', md: 'none' },
-              alignItems: 'center',
-              flexGrow: 1,
-              mb: 0,
-              mt: '-5px'
-            }}
-          >
-            SHOP.CO
-          </Typography>
-        </div>
-        <HeaderPageLinksList handleCloseNavMenu={handleCloseNavMenu} />
-        <HeaderControls />
-      </Toolbar>
+      </div>
+      <HeaderPageLinksList handleCloseNavMenu={handleCloseNavMenu} />
+      <HeaderControls />
+    </Toolbar>
   )
 }

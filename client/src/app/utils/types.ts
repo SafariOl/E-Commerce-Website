@@ -32,3 +32,22 @@ export interface IReviewBunner {
     name: string,
     review: string
 }
+
+export interface IAddressInfo {
+    customer_id: string
+    address_id?: string
+    name: string
+    surname: string
+    company: string | null
+    street: string
+    postIndex: number
+    region: string
+    cityOrVillage: string
+    phone: string
+    email: string
+}
+
+export interface RemoveAddress {
+    customerId: string;
+    addressId: string;
+}

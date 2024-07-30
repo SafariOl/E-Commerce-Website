@@ -4,6 +4,7 @@ export interface IReview {
     rate: number,
     review: string
     user: string
+    product_id: string
 }
 
 export interface IProduct {

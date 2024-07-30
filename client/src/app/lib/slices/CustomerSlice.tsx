@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICustomer } from "../../interfaces/Customer";
-import { activate, customerLogin, customerRegister, refresh } from "../thunks/customerThunks";
+import { activate, changeName, changePassword, customerLogin, customerRegister, logout, refresh } from "../thunks/customerThunks";
 
 
 
@@ -72,6 +72,30 @@ const CustomerSlice = createSlice({
 
         })
         builder.addCase(refresh.rejected, (state, action) => {
+            state.loading = false
+            state.errors = action.payload
+        })
+
+        builder.addCase(changeName.pending, (state) => {state.loading = true})
+        builder.addCase(changeName.fulfilled, (state, action) => {
+            state.loading = false
+            state.errors = null
+            state.customer = action.payload
+            localStorage.setItem('token', action.payload.accessToken)
+        })
+        builder.addCase(changeName.rejected, (state, action) => {
+            state.loading = false
+            state.errors = action.payload
+        })
+
+        builder.addCase(logout.pending, (state) => {state.loading = true})
+        builder.addCase(logout.fulfilled, (state) => {
+            state.loading = false
+            state.errors = null
+            state.customer = null
+            localStorage.removeItem('token')
+        })
+        builder.addCase(logout.rejected, (state, action) => {
             state.loading = false
             state.errors = action.payload
         })
