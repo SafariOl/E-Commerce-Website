@@ -1,6 +1,7 @@
 const uuid = require('uuid')
 const sql = require('../db')
 const fs = require('fs')
+const CustomerService = require('./CustomerService')
 
 class ProductService {
     async insertProduct ({name, price, color, style, discount, description, main_img, img1, img2}) {
@@ -18,7 +19,6 @@ class ProductService {
         
         return await this.getProduct(product_id)
     }
-
     async getGenderProducts(gender) {
         const [products] = await sql.query(`
             SELECT * FROM products WHERE gender=?
@@ -26,16 +26,12 @@ class ProductService {
 
         return products
     }
-
     async getProduct (product_id) {
         const [product] = await sql.query(`
             SELECT * FROM products WHERE product_id = ?
         `, [product_id])
 
-        const [reviews] = await sql.query(`
-            SELECT * FROM product_reviews WHERE product_id = ?
-        `, [product_id])
-
+        const reviews = await this.getReviews(product_id)
         let rate = 0
         if(reviews.length > 0){
             await reviews.map(review => {
@@ -47,14 +43,12 @@ class ProductService {
         const result = product[0]
         return {
             ...result, 
-            rate: rate,
+            rate,
             main_img: result.main_img.toString('base64'),
             img1: result.img1.toString('base64'),
             img2: result.img2.toString('base64'),
-            reviews
         }
     }
-
     async getProducts () {
         const [products] = await sql.query(`
             SELECT * FROM products ORDER BY price LIMIT 6
@@ -69,18 +63,13 @@ class ProductService {
         })
         return result
     }
-
     async getProductsByGender (gender) {
         let [products] = await sql.query(`
             SELECT * FROM products WHERE gender = ?
         `, [gender])
-        
-        const [reviews] = await sql.query(`
-            SELECT * FROM product_reviews
-        `)
-
-        const result = await products.map(product => {
-            const productReviews = reviews.filter(review => review.product_id === product.product_id)
+            
+        const result = await Promise.all(products.map(async(product) => {
+            const productReviews = await this.getReviews(product.product_id)
             let rate = 0
             if(productReviews.length > 0){
                 productReviews.forEach(el => {
@@ -95,19 +84,24 @@ class ProductService {
                 img1: product.img1.toString('base64'),
                 img2: product.img2.toString('base64'),
                 rate,
-                reviews: productReviews
-        }});
+        }}));
 
         return result
     }
-
     async addReview ({product_id, rate, review, user}){
+        const customer = await CustomerService.getCustomer(user)
         await sql.query(`
             INSERT INTO product_reviews() VALUES(?, ?, ?, ?)
-        `, [product_id, review, rate, user])
-        return 'success'
+        `, [product_id, review, rate, customer.user_name])
+        return await this.getReviews(product_id)
     }
+    async getReviews (product_id) {
+        const [reviews] = await sql.query(`
+            SELECT * FROM product_reviews WHERE product_id = ?
+        `, [product_id])
 
+        return reviews || null
+    }
     async getProductsByFilter ({category, price, color, size, style, gender}) {
         let conditions = [];
         let values = [gender];

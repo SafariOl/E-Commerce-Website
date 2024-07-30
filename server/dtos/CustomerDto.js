@@ -3,6 +3,7 @@ module.exports = class CustomerDto {
     user_name
     email
     is_activated
+    password
 
     constructor(model) {
         this.customer_id = model.customer_id

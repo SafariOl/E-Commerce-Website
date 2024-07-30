@@ -58,6 +58,12 @@ class TokenService {
         `, [refreshToken])
         return token
     }
+
+    async removeToken (refreshToken){
+        return await sql.query(`
+            DELETE FROM customer_tokens WHERE refresh_token = ?
+        `, [refreshToken])
+    }
 }
 
 module.exports = new TokenService()

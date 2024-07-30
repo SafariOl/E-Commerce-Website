@@ -48,6 +48,16 @@ class ProductController {
         }
     }
 
+    async getReviews (req, res, next) {
+        try {
+            const productId = req.params.productId
+            const reviews = await ProductService.getReviews(productId)
+            return res.status(200).json(reviews)
+        } catch (e) {
+            next(e)
+        }
+    }
+
     async getByCategory (req, res, next) {
         try{
             const categoryName = req.params.categoryName

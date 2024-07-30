@@ -1,8 +1,11 @@
 const CartService = require("../services/CartService")
+const {validationResult} = require('express-validator')
 
 class CartController {
     async addToCart (req, res, next) {
         try {
+            const errors = validationResult(req)
+            if(errors) next()
             const message = await CartService.addToCart(req.body)
             return res.status(200).json(message)
         } catch (e) {
