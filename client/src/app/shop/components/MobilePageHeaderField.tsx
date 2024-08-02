@@ -19,8 +19,7 @@ export default function MobilePageHeaderField({ isFilterOpen, setIsFilterOpen}:I
             justifyContent: 'space-between',
         }}>
             <Button sx={{ minWidth: 'fit-content', p: '5px' }}
-                onClick={() => setIsFilterOpen(true)}
-            >
+                onClick={() => setIsFilterOpen(true)}>
                 <TuneIcon sx={{color: '#000'}}/>
             </Button>
         </Box>

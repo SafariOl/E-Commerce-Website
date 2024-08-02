@@ -1,13 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Typography } from '@mui/material'
 import PaginationComponent from './PaginationComponent'
 import { useAppSelector } from '@/app/lib/hooks'
 import BasicBreadcrumbs from '@/app/components/BreadCrumbs'
 import { usePathname } from 'next/navigation'
 import useBreadcrumbs from '@/app/hooks/useBreadcrumbs';
+import MobilePageHeaderField from './MobilePageHeaderField'
 
-export default function ShopItems() {    
+export default function ShopItems({isFilterOpen, setIsFilterOpen} :{isFilterOpen: boolean, setIsFilterOpen: (val: boolean) => void}) {    
     const loading = useAppSelector(state => state.shop.loading)
     const pathname = usePathname()
     let textName = pathname.split("/")
@@ -19,6 +20,7 @@ export default function ShopItems() {
             <Box>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: '1em'}}>
                     <BasicBreadcrumbs links={breadcrumbs.links} text={convertedText}/>
+                    <MobilePageHeaderField isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
                 </Box>
                 <Box sx={{
                     width: 'fit-content',

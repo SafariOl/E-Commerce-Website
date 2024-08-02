@@ -55,7 +55,7 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
         <Box display={'flex'} justifyContent={'space-between'} mb={'36px'}>
           <Typography variant='h3' fontSize={20} textTransform={'capitalize'}>Filters</Typography>
           <TuneIcon sx={{
-            [theme.breakpoints.down('md')]: { display: 'none'},
+            [theme.breakpoints.down('lg')]: { display: 'none'},
             rotate: '90deg',
             color: '#9a9a9a'
           }}/>

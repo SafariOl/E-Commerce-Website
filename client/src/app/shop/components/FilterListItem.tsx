@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { KeyboardArrowRight } from '@mui/icons-material'
 import { ListItemContent } from '@mui/joy'
-import { ListItem, ListItemButton } from '@mui/material'
+import { Box, ListItemButton } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
 import { removeCategory, removeColor, removeStyle, setCategory, setColor, setStyle } from '@/app/lib/slices/FilterSlice'
 import { colors, dressStyleList, itemsList } from '@/app/utils/lists'
 import CheckIcon from '@mui/icons-material/Check';
 
-const listItemButton = {
-  mx: -4, 
-  px: '5px',
-  borderRadius: 2,
-}
 
 export default function FilterListItem({item}:{item: string}) {
   const [isChecked, setIsChecked] = useState<boolean>(false)
@@ -42,12 +37,12 @@ export default function FilterListItem({item}:{item: string}) {
   }
 
   return (
-    <ListItem onClick={handleChange} key={item} sx={{py: 0, my: '5px'}}>
+    <Box onClick={handleChange} px={0} key={item} sx={{my: '5px'}}>
         <ListItemButton 
-          sx={{ ...listItemButton, bgcolor: isChecked ? '#ccc' : 'none', '&:hover': {bgcolor: isChecked ? '#c7c7c7' : '#ddd'}}}>
+          sx={{ borderRadius: 2, bgcolor: isChecked ? '#ccc' : 'none', '&:hover': {bgcolor: isChecked ? '#c7c7c7' : '#ddd'}}}>
         <ListItemContent sx={{textTransform: 'capitalize'}}>{item}</ListItemContent>
         {isChecked ? <CheckIcon sx={{fontSize: '1.5em', color: '#0991bf'}}/> : <KeyboardArrowRight />}
         </ListItemButton>
-    </ListItem>
+    </Box>
   )
 }

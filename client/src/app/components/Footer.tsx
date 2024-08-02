@@ -53,8 +53,8 @@ export default function Footer(){
             )}
         </Box>
       </Grid>
-      <Grid item xs={12} md={8} mx={0}>
-        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'} sx={{[theme.breakpoints.down('sm')]: {display: 'none'}}}>
+      <Grid item xs={12} md={8} mx={0} sx={{[theme.breakpoints.down('sm')]: {display: 'none'}}}>
+        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'}>
           {footerHelpLinks.map((item, idx) => 
             <Grid mt={0} key={idx} item xs={12} sm={6} md={3} textAlign={{ md: 'left'}}>
               <Typography variant="h4" sx={{ 
@@ -72,28 +72,28 @@ export default function Footer(){
             </Grid>
           )}
         </Grid>
-        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'} display={{sm: 'none'}}>
-          {footerHelpLinks.map((item, idx) => 
-          <Accordion key={idx} sx={{width: '100%', pl: '24px'}}>
-              <AccordionSummary sx={{my: 0}} expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="h4" sx={{ 
-                  fontSize: 14,
-                  letterSpacing: 2,
-                }}>
-                  {item.title}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {item.links.map((link, idx) =>
-                  <Typography key={idx} variant="body2" mb={'15px'}>
-                    <Link key={idx} href="#" color="inherit" underline='hover' fontSize={15} sx={{opacity: .6}} noWrap>{link}</Link>
-                  </Typography>
-                )}
-              </AccordionDetails>
-          </Accordion>
-          )}
-        </Grid>
       </Grid>
+      <Box sx={{width: '100%', [theme.breakpoints.up('sm')]: {display: 'none'}}}>
+        {footerHelpLinks.map((item, idx) => 
+        <Accordion key={idx} sx={{width: '100%', pl: '24px'}}>
+            <AccordionSummary sx={{my: 0}} expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="h4" sx={{ 
+                fontSize: 14,
+                letterSpacing: 2,
+              }}>
+                {item.title}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {item.links.map((link, idx) =>
+                <Typography key={idx} variant="body2" mb={'15px'}>
+                  <Link key={idx} href="#" color="inherit" underline='hover' fontSize={15} sx={{opacity: .6}} noWrap>{link}</Link>
+                </Typography>
+              )}
+            </AccordionDetails>
+        </Accordion>
+        )}
+      </Box>
     </Box>
   );
 };

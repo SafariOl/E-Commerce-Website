@@ -1,7 +1,6 @@
 import { alpha, InputBase, styled } from "@mui/material";
 import theme from "../theme";
 import Image from "next/image";
-import { width } from "@mui/system";
 
 export const justifyCenterBlock = {
     display: 'flex',
@@ -140,7 +139,7 @@ export const productModulBox = {
 
 export const productModulItemName = {
     fontSize: {md: 20, xs: 16}, 
-    maxWidth: {md: '298px', xs: '172px'},
+    maxWidth: {md: '250px', xs: '172px'},
     overflow: 'hidden',
     textTransform:'capitalize', 
     whiteSpace: 'nowrap',
@@ -188,25 +187,25 @@ export const accordsBox = {
 }
 
 export const filtersMainBox = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    bgcolor: '#fff',
+    zIndex: 1111,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    position: 'sticky',
-    top: 5,
-    [theme.breakpoints.down('sm')] : {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      bgcolor: '#fff',
-      zIndex: 1111
+    [theme.breakpoints.up('lg')] : {
+        position: 'sticky',
+        top: 5,
+        width: '295px',
+        overflowY: 'scroll',
+        scrollbarColor: '#9a9a9a #fff',
+        scrollbarWidth: 'thin',
     },
-    width: '295px',
     p: "2em",
-    overflowY: 'scroll',
-    scrollbarColor: '#9a9a9a #fff',
-    scrollbarWidth: 'thin',
     maxHeight: '100vh',
 }
 
