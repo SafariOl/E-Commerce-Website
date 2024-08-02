@@ -1,7 +1,9 @@
 import { ILogin } from '@/app/interfaces/Customer'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
 import { customerLogin } from '@/app/lib/thunks/customerThunks'
+import { siteBtn } from '@/app/utils/classes'
 import { Box, Button, TextField, Typography } from '@mui/material'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -41,11 +43,11 @@ export default function LoginForm() {
         </Typography>
         <TextField onChange={e => setEmail(e.target.value)} label="Email" variant="outlined" fullWidth margin="normal" />
         <TextField onChange={e => setPassword(e.target.value)} label="Password" variant="outlined" type="password" fullWidth margin="normal" />
-        <Button onClick={handleLogin} variant="contained" color="primary" fullWidth>
+        <Button onClick={handleLogin} sx={{...siteBtn, mt: '4vh'}} variant="contained" color="primary" fullWidth>
             Login
         </Button>
         <Typography variant="body2" align="center" marginTop={2}>
-            Already don't have an account? <a href="/register">Register</a>
+            Already don't have an account? <Link href="/register">Register</Link>
         </Typography>
     </Box>
   )

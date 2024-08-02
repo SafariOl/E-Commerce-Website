@@ -7,7 +7,6 @@ import CartReducer from "./slices/CartSlice";
 import GenderSelectModalSlice from "./slices/GenderSelectModalSlice";
 import AddressSlice from "./slices/AddressSlice";
 
-
 export const store = configureStore({
     reducer: {
       shop: ShopReducer,

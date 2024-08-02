@@ -4,11 +4,8 @@ import Bunner from "./components/Bunner";
 import BrowseDressStyleBunner from "./components/BrowseDressStyleBunner";
 import ReviewsBunner from "./components/ReviewsBunner";
 import HomeItemSec from "./components/HomeItemSec";
-import { Provider } from "react-redux";
-import { store } from "./lib/store";
-import GenderItemsSelection from "./components/GenderItemsSelection";
 import { useLayoutEffect } from "react";
-import { useAppDispatch } from "./lib/hooks";
+import { useAppDispatch, useAppSelector } from "./lib/hooks";
 import { refresh } from "./lib/thunks/customerThunks";
 
 const utilsForItemsSections = [
@@ -29,7 +26,6 @@ export default function Home() {
   })
   return (
     <>
-      <GenderItemsSelection />
       <main>
         <TitleBlock />
         <Bunner />

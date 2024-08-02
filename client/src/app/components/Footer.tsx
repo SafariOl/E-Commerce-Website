@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Box, Grid, Typography, Link } from '@mui/material';
+import { Box, Grid, Typography, Link, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -9,6 +9,7 @@ import theme from '../theme';
 import { footerHelpLinks } from '../utils/lists';
 import { footerWebLinkBox, footerWebLinkStyle, logoStyle } from '../utils/classes';
 import { IFooterWebLink } from '../utils/types';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const footerWebLinks:IFooterWebLink[] = [
   {
@@ -31,7 +32,7 @@ const footerWebLinks:IFooterWebLink[] = [
 
 export default function Footer(){
   return (
-    <Box sx={{py: 6, pl: 3, pr: 3, display: 'flex', flexWrap: 'wrap', gap: 5, justifyContent: {md: 'space-between', xs: 'center'}, [theme.breakpoints.down('lg')]: {textAlign: 'center'}}}>
+    <Box sx={{py: 6, pl: 3, pr: 3, display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: {lg: 'space-between', xs: 'center'}, [theme.breakpoints.down('lg')]: {textAlign: 'center'}}}>
       <Grid item xs={12} md={4} sx={{[theme.breakpoints.down('md')]: {textAlign: 'left'}}}>
         <Typography 
         variant="h1"
@@ -53,9 +54,9 @@ export default function Footer(){
         </Box>
       </Grid>
       <Grid item xs={12} md={8} mx={0}>
-        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'}>
+        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'} sx={{[theme.breakpoints.down('sm')]: {display: 'none'}}}>
           {footerHelpLinks.map((item, idx) => 
-            <Grid mt={0} key={idx} item xs={12} sm={6} md={3} textAlign={{ xs: 'center', sm: 'left' }} >
+            <Grid mt={0} key={idx} item xs={12} sm={6} md={3} textAlign={{ md: 'left'}}>
               <Typography variant="h4" sx={{ 
                 fontSize: {md: 16, xs: 14},
                 letterSpacing: {md: 4, xs: 2},
@@ -68,7 +69,28 @@ export default function Footer(){
                   <Link key={idx} href="#" color="inherit" underline='hover' fontSize={14} sx={{opacity: .6}} noWrap>{link}</Link>
                 </Typography>
               )}
-          </Grid>
+            </Grid>
+          )}
+        </Grid>
+        <Grid container spacing={{md: 10, xs: 4}} justifyContent={'center'} display={{sm: 'none'}}>
+          {footerHelpLinks.map((item, idx) => 
+          <Accordion key={idx} sx={{width: '100%', pl: '24px'}}>
+              <AccordionSummary sx={{my: 0}} expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="h4" sx={{ 
+                  fontSize: 14,
+                  letterSpacing: 2,
+                }}>
+                  {item.title}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                {item.links.map((link, idx) =>
+                  <Typography key={idx} variant="body2" mb={'15px'}>
+                    <Link key={idx} href="#" color="inherit" underline='hover' fontSize={15} sx={{opacity: .6}} noWrap>{link}</Link>
+                  </Typography>
+                )}
+              </AccordionDetails>
+          </Accordion>
           )}
         </Grid>
       </Grid>

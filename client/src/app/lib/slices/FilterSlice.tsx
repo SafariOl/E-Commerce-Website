@@ -32,7 +32,17 @@ const FilterSlice = createSlice({
         setGender (state, action) { state.gender = action.payload },
 
         chooseSize(state, action) { state.sizeForCart = action.payload},
-        removeSizeChoice(state) { state.sizeForCart = ""}
+        removeSizeChoice(state) { state.sizeForCart = ""},
+
+        clearFilter (state) {
+            state.category = [],
+            state.price = [0, 5000],
+            state.color = [],
+            state.style = [],
+            state.size = [],
+            state.sizeForCart = "",
+            state.gender = ''
+        }
     }
 })
 
@@ -44,5 +54,6 @@ export const {
     setStyle, removeStyle,
     setSize, removeSize,
     setGender, 
-    chooseSize, removeSizeChoice
+    chooseSize, removeSizeChoice,
+    clearFilter
 } = FilterSlice.actions

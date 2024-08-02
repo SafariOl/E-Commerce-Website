@@ -11,7 +11,6 @@ export default function ReviewsBunner() {
             <Typography variant='h1' fontSize={{md: '48px', xs: '32px'}} mb={{md: '40px', xs: '16px'}} ml={'12px'}>OUR HAPPY CUSTOMERS</Typography>
             <Grid container>
                 {reviews.map((rev, idx) =>{
-                    
                 return (
                     <Grid key={idx} item xs={12} md={4} sx={{...gridItemReview, 
                         borderRight: (idx !== reviews.length - 1) ? '1px solid #c7c7c7': null

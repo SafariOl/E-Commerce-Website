@@ -73,6 +73,7 @@ const CustomerSlice = createSlice({
         })
         builder.addCase(refresh.rejected, (state, action) => {
             state.loading = false
+            state.customer = null
             state.errors = action.payload
         })
 

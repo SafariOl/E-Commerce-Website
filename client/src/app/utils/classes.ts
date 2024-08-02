@@ -1,6 +1,7 @@
 import { alpha, InputBase, styled } from "@mui/material";
 import theme from "../theme";
 import Image from "next/image";
+import { width } from "@mui/system";
 
 export const justifyCenterBlock = {
     display: 'flex',
@@ -16,13 +17,17 @@ export const directionColumnBlock = {
 
 export const CheckCustomerModalBox = {
     position: 'absolute',
+    textAlign: 'center',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    maxWidth: 350,
+    width: '100%',
     bgcolor: 'background.paper',
-    boxShadow: '0 0 10px #777',
-    p: 4,
+    boxShadow: '0 0 15px #202020',
+    border: '1px solid #b2b2b2',
+    p: '2em 0 1em',
+    borderRadius: '20px'
 };
 
 export const copyrightBoxClass = {
@@ -98,61 +103,7 @@ export const IconDisplayWrapper = styled('div')(({ theme }) => ({
     [theme.breakpoints.down(1100)]: {
       display: 'block'
     }
-}))
-
-export const SearchBox = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    maxHeight: "40px",
-    width: '100%',
-    marginTop: '1em',
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-    [theme.breakpoints.up(1100)]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-        display: 'flex',
-        alignItems: 'baseline',
-    },
-    color: "#000",
-}));
-
-export const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    borderBottom: "1px solid #b3b3b3",
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(0, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-        width: '20ch',
-        '&:focus': {
-            borderBottom: "1px solid #000",
-        },
-        },
-    },
-}));
-
-export const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'baseline',
-    justifyContent: 'center',
-}));
-  
+}))  
 
 export const headerShopAccordBox = {
     [theme.breakpoints.down('md')]: {
@@ -170,7 +121,7 @@ export const headerShopAccordBox = {
 export const productModulLink = {
     color: '#000', 
     textDecoration: 'none', 
-    width: '295px',
+    width: '250px',
     display: 'flex', 
     flexDirection: 'column', 
     alignItems: 'start', 
@@ -296,7 +247,7 @@ export const checkboxSize = {
 
 export const shopMainBox = {
     display: 'grid',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       gridTemplateColumns:'295px 1fr',
     },
 }
@@ -372,4 +323,24 @@ export const addressInputField = {
     px: '10px',
     maxWidth: '300px',
     width: '100%'
+}
+
+export const formBox = {
+    ...directionColumnBlock,
+    justifyContent:"center",
+    padding: 2,
+    bgcolor:"#f5f5f5"
+}
+
+export const siteBtn = {
+    bgcolor: '#202020',
+    color: '#fff',
+    textTransform: 'capitalize',
+    fontSize: {md: '16px', xs: '14px'},
+    py: '7px',
+    borderRadius: '10px',
+    [theme.breakpoints.up('md')]:{
+        '&:hover': { bgcolor: '#2b2b2b' }
+        
+    }
 }

@@ -1,6 +1,6 @@
 import { ILink } from '../components/BreadCrumbs';
 
-export default function useBreadcrumbs({pathname, text}:{pathname: string, text: string}) {
+export default function useBreadcrumbs({pathname}:{pathname: string}) {
     const pathArr = pathname.split("/")
     const breadcrumbs:ILink[]  = pathArr.slice(0, -1).map((el, idx, arr) => {
         let href = arr.slice(0, idx + 1).join("/");
@@ -18,5 +18,5 @@ export default function useBreadcrumbs({pathname, text}:{pathname: string, text:
         }
     }).filter((breadcrumb): breadcrumb is ILink => breadcrumb !== null);
   
-  return {links: breadcrumbs, text}
+  return {links: breadcrumbs}
 }

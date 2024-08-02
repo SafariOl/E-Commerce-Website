@@ -2,12 +2,8 @@ import React from 'react'
 import {List} from '@mui/material'
 import FilterListItem from './FilterListItem'
 
-interface IProps {
-  list: Array<any> 
-}
 
-export default function FilterList (props:IProps) {
-  const {list} = props
+export default function FilterList ({list}:{list: string[] }) {
   return (
     <List sx={{mb: 1}}>
         {list.map(item =>

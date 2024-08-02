@@ -4,8 +4,8 @@ import { IReview } from "@/app/interfaces/Product";
 import { IFilter } from "@/app/interfaces/Filter";
 import { API_KEY } from "@/app/utils/api";
 
-export const getProducts = createAsyncThunk('src/getProducts', async(gender: string) => {
-    const res = await axios.get(`${API_KEY}/products/${gender}`)
+export const getProducts = createAsyncThunk('src/getProducts', async(category: string) => {
+    const res = await axios.get(`${API_KEY}/products/${category}`)
     return res.data
 })
 

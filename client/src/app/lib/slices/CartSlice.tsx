@@ -1,48 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ICart } from "@/app/interfaces/Cart";
-import { getCustomerCart, removeFromCart } from "../thunks/cartThunks";
 
 interface IState {
     loading: boolean
-    cart: ICart[] | null
+    cart: ICart[] | []
     errors: string | null
 }
 
 const initialState:IState = {
     loading: false,
-    cart: null,
+    cart: JSON.parse(localStorage.getItem('cart')!) || [],
     errors: null
 }
 
 const CartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers: {},
-    extraReducers: builder => {
-        builder.addCase(getCustomerCart.pending, (state) => {state.loading = true})
-        builder.addCase(getCustomerCart.fulfilled, (state, action) => {
-            state.loading = false
-            state.errors = null
-            state.cart = action.payload || null
-        })
-        builder.addCase(getCustomerCart.rejected, (state) => {
-            state.loading = false
-            state.errors = "Error"
-        })
-
-        ///////////////////////
-
-        builder.addCase(removeFromCart.pending, (state) => {state.loading = true})
-        builder.addCase(removeFromCart.fulfilled, (state, action) => {
-            state.loading = false
-            state.errors = null
-            state.cart = action.payload || null
-        })
-        builder.addCase(removeFromCart.rejected, (state) => {
-            state.loading = false
-            state.errors = "Error"
-        })
+    reducers: {
+        addToCookieCart (state, action) {
+            if(action.payload){
+                const item = state.cart.findIndex(cartItem => cartItem.product_id === action.payload.product_id)
+                if(item >= 0) {
+                    state.cart[item].count += action.payload.count
+                    localStorage.setItem("cart", JSON.stringify(state.cart))
+                }else {
+                    state.cart = [...state.cart, action.payload] 
+                    localStorage.setItem("cart", JSON.stringify(state.cart))
+                }
+            }
+        },
+        removeFromCookieCart(state, action) {
+            state.cart = state.cart.filter(item => item.product_id !== action.payload.product_id)
+            localStorage.setItem("cart", JSON.stringify(state.cart))
+        },
+        changeCountOfItem (state, action) {
+            const item = state.cart.findIndex(cartItem => cartItem.product_id === action.payload.product_id)
+            if(item >= 0) {
+                state.cart[item].count = action.payload.count
+                localStorage.setItem("cart", JSON.stringify(state.cart))
+            }
+        },
     }
 })
 
 export default CartSlice.reducer
+export const {addToCookieCart, removeFromCookieCart, changeCountOfItem} = CartSlice.actions

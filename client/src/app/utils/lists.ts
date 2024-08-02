@@ -17,7 +17,7 @@ import apple_img from '../assets/images/payment-images/applePay.svg'
 import gpay_img from '../assets/images/payment-images/G Pay.svg'
 import { IReviewBunner, IStylesList, TFooter } from "./types"
 
-export const pages:string[] = ['On Sale', 'New Arrivals', 'Brands'];
+export const pages:string[] = ['Men', 'Women', 'On Sale', 'Brands'];
 
 export const itemsList:string[] = [
     't-shirt', 'shorts', 'suits', 'hoodie', 'jeans'

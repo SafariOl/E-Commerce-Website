@@ -10,10 +10,10 @@ const priceBox = {
     alignItems: 'center'
 }
 
-export default function SummaryPrice(cartItems:ICart[]) {
+export default function SummaryPrice({cart}:{cart: ICart[]}) {
     const deliveryFee = 15
     let subTotal = 0
-    cartItems.map(el => {subTotal += (Number(el.price) * el.count)})
+    cart.map(el => {subTotal += (Number(el.price) * el.count)})
     const summaryItems = [
         {
             title: "Subtotal",
@@ -36,7 +36,9 @@ export default function SummaryPrice(cartItems:ICart[]) {
         display: 'flex',
         flexDirection: 'column',
         gap: '24px',
-        px: 2
+        px: 2,
+        position: 'sticky',
+        top:'10%'
     }}>
         <Typography variant='h4' fontSize={{md: 24, xs: 20}} fontWeight={700}>Order Summary</Typography>
         <div>

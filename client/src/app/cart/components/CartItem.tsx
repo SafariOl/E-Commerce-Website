@@ -1,23 +1,39 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Box, IconButton, Link, Typography } from '@mui/material'
+import { Box, Button, IconButton, Link, Typography } from '@mui/material'
 import Image from 'next/image'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Count from '@/app/shop/[...productId]/components/Count'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
-import { removeFromCart } from '@/app/lib/thunks/cartThunks';
 import { ICart } from '@/app/interfaces/Cart';
-
+import { siteBtn } from '@/app/utils/classes';
+import { changeCountOfItem, removeFromCookieCart } from '@/app/lib/slices/CartSlice';
 
 export default function CartItem({product_id, item_name, price, color, count, main_img, size, gender}:ICart) {
     const [newCount, setCount] = useState<number>(count)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const dispatch = useAppDispatch()
-    const customerId = useAppSelector(state => state.customer.customer?.customer.customer_id)
-    price *= count
+
+    useEffect(() => {
+        newCount !== count && setIsOpen(true)
+    }, [newCount])
+
     const handleClick = () => {
-        customerId && dispatch(removeFromCart({customer_id: customerId, product_id: product_id, size: size}))
+        dispatch(removeFromCookieCart({product_id: product_id}))
     }
+
+    const handleSave = () => {
+        dispatch(changeCountOfItem({product_id, count: newCount}))
+        setIsOpen(false)
+    }
+
+    const handleCancel = () => {
+        setCount(count)
+        setIsOpen(false)
+    }
+
   return (
+    <>
     <Box key={product_id} sx={{
         my: '24px',
         display: 'flex',
@@ -49,7 +65,7 @@ export default function CartItem({product_id, item_name, price, color, count, ma
                 </Link>
                 <Typography variant='body1' fontSize={{md: 14, xs: 12}}>Size: <span>{size}</span></Typography>
                 <Typography variant='body1' fontSize={{md: 14, xs: 12}} mb={'20px'}>Color: <span>{color}</span></Typography>
-                <Typography variant='h4' fontWeight={700} fontSize={{md: 24, xs: 20}}>${price}</Typography>
+                <Typography variant='h4' fontWeight={700} fontSize={{md: 24, xs: 20}}>${(newCount*price).toFixed(2)}</Typography>
             </Box>
             <Box sx={{
                 display: 'flex',
@@ -57,12 +73,29 @@ export default function CartItem({product_id, item_name, price, color, count, ma
                 justifyContent: 'space-between',
                 alignItems: 'end'
             }}>
+                {isOpen ? 
+                <Box sx={{display: 'flex', gap:'10px'}}>
+                    <Button onClick={handleCancel} 
+                    sx={{
+                        ...siteBtn,
+                        bgcolor: 'transparent', 
+                        border: '1px solid #000',
+                        color: '#000',
+                        '&:hover':{
+                            bgcolor:'transparent'
+                        }
+                    }}>Cancel</Button>
+                    <Button onClick={handleSave} sx={siteBtn}>Save</Button> 
+                </Box>
+                :
                 <IconButton onClick={handleClick} sx={{p: 0}}>
                     <DeleteOutlineIcon sx={{color: 'red'}} />
                 </IconButton>
+                }
                 <Count count={newCount} setCount={setCount}/>
             </Box>
         </Box>
     </Box>
+    </>
   )
 }

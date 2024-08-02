@@ -2,18 +2,13 @@ import{ List } from '@mui/material'
 import React  from 'react'
 import SizeBtn from './SizeBtn'
 
-interface IProp {
-    sizes: Array<string>
-}
-
-export default function Size(props:IProp) {
-    const {sizes} = props
+export default function Size({sizes}:{sizes: string[]}) {
     
   return (
     <List sx={{display: 'flex', gap: 1, flexWrap: 'wrap'}}>
-        {sizes.map((size, idx) => 
+        {sizes.map(size => 
           <div key={size}>
-            <SizeBtn size={size} idx={idx}/>
+            <SizeBtn size={size} />
           </div>        
         )}
     </List>

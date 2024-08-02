@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 import CartItem from './CartItem'
-import { ICart } from '@/app/reducers/CartReducer'
+import { ICart } from '@/app/interfaces/Cart'
 
 
-export default function CartItems(cart:ICart[]) {
+export default function CartItems({cart}:{cart: ICart[]}) {
   return (
     <Box sx={{
         my: 2,

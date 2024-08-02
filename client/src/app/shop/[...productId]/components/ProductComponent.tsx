@@ -18,7 +18,7 @@ export default function ProductComponent(prop: {productId:string[]}) {
     let breadcrumbs
 
     if(item) {
-      breadcrumbs = useBreadcrumbs({pathname, text: item.name})
+      breadcrumbs = useBreadcrumbs({pathname})
     } 
 
     useLayoutEffect(() => { 
@@ -31,7 +31,7 @@ export default function ProductComponent(prop: {productId:string[]}) {
         {loading && <Typography variant='h1'>Loading...</Typography>}
         {item && breadcrumbs &&
         <>
-          <BasicBreadcrumbs links={breadcrumbs.links} text={breadcrumbs.text}/>
+          <BasicBreadcrumbs links={breadcrumbs.links} text={item.name}/>
           <Box>
             <Grid container mt={3} mb={7} maxHeight={'100%'}>
               <Grid item xs={12} lg={6}>
@@ -40,6 +40,7 @@ export default function ProductComponent(prop: {productId:string[]}) {
               <Grid item xs={12} lg={6} maxWidth={'590px'}>
                 <ProductInfo
                   product_id={prop.productId[1]}
+                  main_img={item.main_img}
                   name={item.name} 
                   rate={item.rate} 
                   price={item.price} 

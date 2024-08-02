@@ -1,17 +1,17 @@
-import { useAppDispatch } from '@/app/lib/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
 import { removeSize, setSize } from '@/app/lib/slices/FilterSlice'
 import { checkboxSize, sizeListBtn } from '@/app/utils/classes'
 import { Checkbox, ListItem, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-interface ISizeProp {
-    size: string,
-    idx: number
-}
-
-export default function SizeBtn({size, idx}:ISizeProp) {
+export default function SizeBtn({size}:{size: string}) {
     const [isChecked, setIsChecked] = useState<boolean>(false)
     const dispatch = useAppDispatch()
+    const sizeFilter = useAppSelector(state => state.filter.size)
+    
+    useEffect(() => {
+        !sizeFilter.length && setIsChecked(false)
+    }, [sizeFilter])
 
     const handleChange = () => {
         if(isChecked) {

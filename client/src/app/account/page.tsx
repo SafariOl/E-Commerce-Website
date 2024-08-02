@@ -11,6 +11,7 @@ import { directionColumnBlock } from '../utils/classes'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { IoShirt } from "react-icons/io5";
 import LogoutIcon from '@mui/icons-material/Logout';
+import CheckCustomerModal from '../components/CheckCustomerModal'
 
 const accountPageTitle = {
     color: '#000',
@@ -21,12 +22,12 @@ const accountPageTitle = {
 export default function AccountPage() {
     const [currPage, setCurrPage] = useState(0)
     const dispatch = useAppDispatch()
-    const customer = useAppSelector(state => state.customer.customer?.customer)
+    const customer = useAppSelector(state => state.customer.customer)
     const router = useRouter()
 
     const handleLogout = () => {
+        router.push('/login')
         dispatch(logout())
-        router.push('/')
     }
 
     useLayoutEffect(() => {
@@ -34,12 +35,13 @@ export default function AccountPage() {
     }, [])
 
     useEffect(() => {
-        if(customer){
-            dispatch(getAddress(customer.customer_id))
+        if(customer !== null){
+            dispatch(getAddress(customer.customer.customer_id))
         }
     }, [customer])
 
   return (
+    <>
     <Grid container spacing={2} my={'2em'} position={'relative'}>
         <Grid item xs={12} md={2} sx={{borderRight: '1px solid #262626'}}>
             <Box sx={{...directionColumnBlock, alignItems: 'start', gap: '.5em', position: {md: 'sticky'}, top: {md:'5%'}}}>
@@ -52,5 +54,6 @@ export default function AccountPage() {
             {currPage == 0 ? <Account /> : <Orders />}
         </Grid>
     </Grid>
+    </>
   )
 }

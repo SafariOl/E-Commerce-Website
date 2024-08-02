@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TuneIcon from '@mui/icons-material/Tune';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { usePathname } from 'next/navigation';
-import { setGender } from '@/app/lib/slices/FilterSlice';
+import { clearFilter, setGender } from '@/app/lib/slices/FilterSlice';
 import { getFilteredItems } from '@/app/lib/thunks/shopThunks';
 import { filtersMainBox } from '@/app/utils/classes';
 
@@ -19,8 +19,7 @@ const btnClass = {
   transition: 'all .15s ease-in-out',
   '&:hover': {
     bgcolor: '#3a3a3a'
-  },
-  mb: 5
+  }
 }
 
 interface IProp {
@@ -37,6 +36,10 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
     dispatch(setGender(pathname.slice(6, pathname.length).split('')[0].toUpperCase()))
   }, [])
 
+  const handleCancel = () => {
+    dispatch(clearFilter())
+  }
+
   const handleClick = () => {
     dispatch(getFilteredItems(filter))
     setIsFilterOpen(false)
@@ -44,8 +47,9 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
 
   return (
     <Box sx={{
-      ...filtersMainBox,
-      [theme.breakpoints.down('md')]:{ display: isFilterOpen ? 'block' : 'none'},
+      ...filtersMainBox, 
+      mb: 5,
+      [theme.breakpoints.down('lg')]:{ display: isFilterOpen ? 'block' : 'none'},
     }}>
       <div>
         <Box display={'flex'} justifyContent={'space-between'} mb={'36px'}>
@@ -55,7 +59,7 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
             rotate: '90deg',
             color: '#9a9a9a'
           }}/>
-          <Button sx={{[theme.breakpoints.up('md')] : {display: 'none'}}}
+          <Button sx={{[theme.breakpoints.up('lg')] : {display: 'none'}}}
            onClick={() => setIsFilterOpen(false)}>
             <CloseIcon sx={{
               color: '#000'
@@ -65,7 +69,11 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
         <FilterItems />
         <FilterAccordion />
       </div>
-      <Button onClick={handleClick} sx={btnClass}>Apply Filter</Button>
+      <div>
+        {(filter.category.length || filter.color.length || 
+        filter.size.length || filter.style.length ) ? <Button onClick={handleCancel} sx={{bgcolor: 'transparent', color: '#000', border: '1px solid #000', width: '100%', mb: '1em'}}>Clear All</Button> : null}
+        <Button onClick={handleClick} sx={btnClass}>Apply Filter</Button>
+      </div>
     </Box>
   )
 }

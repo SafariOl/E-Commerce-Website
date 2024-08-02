@@ -1,7 +1,9 @@
 import { IRegister } from '@/app/interfaces/Customer'
 import { useAppDispatch } from '@/app/lib/hooks'
 import { customerRegister } from '@/app/lib/thunks/customerThunks'
+import { siteBtn } from '@/app/utils/classes'
 import { Box, Button, TextField, Typography } from '@mui/material'
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 export default function RegisterForm() {
@@ -9,8 +11,7 @@ export default function RegisterForm() {
     const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
-
+    const [error, setError] = useState<string>("")
     const handleRegister = () => {
         if(!username || !email || !password) return
 
@@ -23,6 +24,7 @@ export default function RegisterForm() {
     }
 
   return (
+    <>
     <Box
         width={{ xs: '100%', sm: '400px' }}
         padding={3}
@@ -36,12 +38,13 @@ export default function RegisterForm() {
         <TextField onChange={e => setUsername(e.target.value)} label="Username" variant="outlined" fullWidth margin="normal" />
         <TextField onChange={e => setEmail(e.target.value)} label="Email" variant="outlined" fullWidth margin="normal" />
         <TextField onChange={e => setPassword(e.target.value)} label="Password" variant="outlined" type="password" fullWidth margin="normal" />
-        <Button href='/activation' onClick={handleRegister} variant="contained" color="primary" fullWidth>
+        <Button href='/activation' sx={{...siteBtn, mt: '4vh'}} onClick={handleRegister} variant="contained" color="primary" fullWidth>
             Register
         </Button>
         <Typography variant="body2" align="center" marginTop={2}>
-            Already have an account? <a href="/login">Log in</a>
+            Already have an account? <Link href="/login">Log in</Link>
         </Typography>
     </Box>
+    </>
   )
 }

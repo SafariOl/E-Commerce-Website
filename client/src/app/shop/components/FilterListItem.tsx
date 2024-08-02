@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { KeyboardArrowRight } from '@mui/icons-material'
 import { ListItemContent } from '@mui/joy'
 import { ListItem, ListItemButton } from '@mui/material'
-import { useAppDispatch } from '@/app/lib/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
 import { removeCategory, removeColor, removeStyle, setCategory, setColor, setStyle } from '@/app/lib/slices/FilterSlice'
 import { colors, dressStyleList, itemsList } from '@/app/utils/lists'
 import CheckIcon from '@mui/icons-material/Check';
@@ -13,14 +13,14 @@ const listItemButton = {
   borderRadius: 2,
 }
 
-interface IProp {
-  item: string
-}
-
-export default function FilterListItem(prop:IProp) {
-  const {item} = prop
+export default function FilterListItem({item}:{item: string}) {
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const filter = useAppSelector(state => state.filter)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if(!filter.category.length && !filter.color.length && !filter.size.length && !filter.style.length) setIsChecked(false)
+  }, [filter])
 
   const handleChange = () => {
     setIsChecked(!isChecked)

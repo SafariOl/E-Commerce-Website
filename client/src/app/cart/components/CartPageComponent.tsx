@@ -1,28 +1,19 @@
+'use client'
 import { Box, Typography } from '@mui/material'
 import CartItems from './CartItems'
 import SummaryPrice from './SummaryPrice'
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
-import { useRouter } from 'next/navigation'
-import { getCustomerCart } from '@/app/lib/thunks/cartThunks'
 import { refresh } from '@/app/lib/thunks/customerThunks'
 
 export default function CartPageComponent() {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(state => state.cart.cart)
-    const customer = useAppSelector(state => state.customer.customer)
 
     useLayoutEffect(() => {
-        if(localStorage.getItem('token')){
-            dispatch(refresh())
-        }
+        if(localStorage.getItem('token')) dispatch(refresh())
     }, [])
 
-    useEffect(() => {
-        if(customer){
-            dispatch(getCustomerCart(customer.customer.customer_id,))
-        }
-    }, [customer])
   return (
     <>
     <Box px={2}>
@@ -35,12 +26,13 @@ export default function CartPageComponent() {
             display: 'flex',
             justifyContent: 'space-between',
             gap: '3em',
+            position: 'relative',
             flexWrap: 'wrap'
         }}>
             {cart && 
             <>
-                {CartItems(cart)}
-                {SummaryPrice(cart)}
+            <CartItems cart={cart}/>
+            <SummaryPrice cart={cart}/>
             </>
             }
         </Box>

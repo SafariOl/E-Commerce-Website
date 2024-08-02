@@ -16,6 +16,7 @@ export interface IProductInfo {
     name: string
     rate: number
     price: number
+    main_img: string
     discount: number | null
     description: string
     color: string

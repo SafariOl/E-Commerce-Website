@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { store } from './lib/store';
 import './styles/style.css';
 
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -29,7 +30,7 @@ export default function RootLayout({
               }}
             >
               <Header />
-              <Box component="main">
+              <Box component="main" sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {children}
               </Box>
               <footer>

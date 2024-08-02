@@ -1,7 +1,6 @@
 import { Box, IconButton, Link, Menu, MenuItem } from '@mui/material'
 import React from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
-import HeaderShopAccord from './HeaderShopAccord';
 import { pages } from '../utils/lists';
 
 interface IMenu {
@@ -40,20 +39,17 @@ export default function MenuBlock({handleOpenNavMenu, handleCloseNavMenu, anchor
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuItem>
-                <HeaderShopAccord />
-              </MenuItem>
-                {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link
-                      key={page}
-                      href={'/' + page.toLowerCase().replaceAll(' ', '-')}
-                      sx={{ color: '#000', textTransform: "capitalize", textDecoration: 'none', fontSize: '16px', textAlign: 'center'}}
-                    >
-                      {page}
-                    </Link>
-                    </MenuItem>
-                ))}
+              {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Link
+                    key={page}
+                    href={'/shop/' + page.toLowerCase().replaceAll(' ', '-')}
+                    sx={{ color: '#000', textTransform: "capitalize", textDecoration: 'none', fontSize: '16px', textAlign: 'center'}}
+                  >
+                    {page}
+                  </Link>
+                  </MenuItem>
+              ))}
             </Menu>
             
         </Box>

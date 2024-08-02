@@ -24,18 +24,15 @@ export default function CheckCustomerModal({isOpen}:IProp) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={CheckCustomerModalBox}>
-          <div>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+          <div style={{marginBottom: '2em'}}>
+            <Typography id="modal-modal-title" variant="h1" sx={{fontSize: {md: '1.4em', xs:'1.1em'}, mb: '.5em'}}>
               Are You Registered?
             </Typography>
-            <Link href="/login">Sign In</Link>
+            <Link href="/login" underline='hover' sx={{color: 'purple', fontSize: '18px', fontWeight: 600}}>Sign In</Link>
           </div>
-          <div>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              First time on the site?
-            </Typography>
-            <Link href="/register">Sign Up</Link>
-          </div>
+          <Typography id="modal-modal-description" variant="h3" sx={{fontSize: {md: '1em', xs:'.9em'}, mb: '.5em'}}>
+            First time on the site? <Link href="/register" sx={{color: 'purple', fontSize: '15px', fontWeight: 600}}>Sign Up</Link>
+          </Typography>
         </Box>
       </Modal>
     </div>

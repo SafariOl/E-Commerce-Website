@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Count from './Count'
 import theme from '@/app/theme'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
@@ -9,47 +9,44 @@ import ItemDiscount from './ItemDiscount'
 import ItemRating from './ItemRating'
 import Size from './Sizes'
 import { refresh } from '@/app/lib/thunks/customerThunks'
-import { openModal } from '@/app/lib/slices/CheckCustomerSlice'
-import { addToCart } from '@/app/lib/thunks/cartThunks'
 import { IProductInfo } from '@/app/utils/types'
 import { sizes } from '@/app/utils/lists'
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addToCookieCart } from '@/app/lib/slices/CartSlice'
 
-export default function ProductInfo({product_id, name, rate, price, discount, description, color}:IProductInfo) {
+export default function ProductInfo({product_id, name, rate, price, discount, description, color, main_img}:IProductInfo) {
     const [newPrice, setNewPrice] = useState<number | null>(null)
     const isOpen = useAppSelector(state => state.signModal.isOpen)
     const dispatch = useAppDispatch()
-    const customer = useAppSelector(state => state.customer.customer)
     const [count, setCount] = useState<number>(1)
     const size = useAppSelector(state => state.filter.sizeForCart)
+    const notifySuccess = () => toast.success("Item was successfully added to you cart", {autoClose: 1000, transition: Slide})
 
     useLayoutEffect(() => {
-        if(localStorage.getItem('token')){
-            dispatch(refresh())
-        }
-        if(discount){
-            setNewPrice(price - (price * discount / 100))
-        }
+        localStorage.getItem('token') && dispatch(refresh())
+        discount && setNewPrice(price - (price * discount / 100))
     }, [])
 
     const handleClick = () => {
-        if(!customer){
-            dispatch(openModal())
-        }else if(!size || size.length > 1) {
-            return console.log("Choose one size of item")
+        if(!size || size.length > 1){ 
+            const notifyError = () => toast.error("Size wasn't selected...", {autoClose: 1000, transition: Slide})
+            return notifyError()
         }
-        else {
-            dispatch(addToCart({
-                customer_id: customer.customer.customer_id, 
-                product_id: product_id,
-                count: count,
-                size: size
-            }))
-        }
+        dispatch(addToCookieCart({product_id, item_name: name, main_img, count, size, price, color}))
+        notifySuccess()
     }
 
   return (
     <>
-        <CheckCustomerModal isOpen={isOpen}/>
+        <ToastContainer 
+            theme='colored'
+            closeOnClick={false}
+            pauseOnFocusLoss={false}
+            pauseOnHover={false}
+            transition={Slide}
+        />
+        <CheckCustomerModal isOpen={isOpen} />
         <Box sx={{display: 'flex', flexDirection: 'column', ml: 2, px: 2 }}>
             <Typography variant='h1' sx={{
                 fontSize:{xs: '24px', md: '40px'}
@@ -58,7 +55,7 @@ export default function ProductInfo({product_id, name, rate, price, discount, de
             {discount && newPrice ? 
                 <ItemDiscount price={price} newPrice={newPrice} discount={discount} />
                 :
-                <Typography variant='h3' sx={{fontSize: {md: 32, xs: 24}}}>${price}</Typography>
+                <Typography variant='h3' sx={{fontSize: {md: 32, xs: 24}}}>${Number(price).toFixed(2)}</Typography>
             }
             <Box sx={{display: 'flex', flexDirection: 'column', gap: '45px'}}>
                 <Typography variant='body1' mt={'18px'}>{description}</Typography>

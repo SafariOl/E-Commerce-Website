@@ -12,7 +12,7 @@ import { justifyCenterBlock, paginationControls } from '@/app/utils/classes';
 export default function PaginationComponent()  {
   const [page, setPage] = useState<number>(1)
   const pathname = usePathname()
-  const gender = pathname.slice(6, pathname.length)
+  const category = pathname.slice(6, pathname.length)
   const dispatch = useAppDispatch()
   const productsPerPage = 6;
   const items = useAppSelector(state => state.shop.items)
@@ -23,13 +23,13 @@ export default function PaginationComponent()  {
   };
   
   useEffect(() => {
-    dispatch(getProducts(gender.split('')[0].toUpperCase()))
+    dispatch(getProducts(category.split('')[0].toUpperCase()))
   }, [])
 
   return (
     <>
-      <ProductsModul items={items.slice((page - 1) * productsPerPage, page * productsPerPage)} gender={gender}/>
-      <Box sx={justifyCenterBlock}>
+      <ProductsModul items={items.slice((page - 1) * productsPerPage, page * productsPerPage)} category={category}/>
+      <Box sx={{...justifyCenterBlock, mb: '2em'}}>
           <Pagination 
             count={count} 
             shape="rounded" 
