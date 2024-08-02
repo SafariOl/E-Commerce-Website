@@ -63,27 +63,34 @@ class ProductService {
         })
         return result
     }
-    async getProductsByGender (gender) {
-        let [products] = await sql.query(`
+    async getProductsByCategory (category) {
+        let products
+        if(category !== 'O'){
+            [products ] = await sql.query(`
             SELECT * FROM products WHERE gender = ?
-        `, [gender])
-            
+            `, [category])
+        }else {
+            [products] = await sql.query(`
+              SELECT * FROM products WHERE discount IS NOT NULL  
+            `)
+        }
+
         const result = await Promise.all(products.map(async(product) => {
-            const productReviews = await this.getReviews(product.product_id)
-            let rate = 0
-            if(productReviews.length > 0){
-                productReviews.forEach(el => {
-                    rate += parseFloat(el.rate)
-                });
-                rate = (rate/productReviews.length).toFixed(1)
-            }
-            
-            return {
-                ...product,
-                main_img: product.main_img.toString('base64'),
-                img1: product.img1.toString('base64'),
-                img2: product.img2.toString('base64'),
-                rate,
+        const productReviews = await this.getReviews(product.product_id)
+        let rate = 0
+        if(productReviews.length > 0){
+            productReviews.forEach(el => {
+                rate += parseFloat(el.rate)
+            });
+            rate = (rate/productReviews.length).toFixed(1)
+        }
+        
+        return {
+            ...product,
+            main_img: product.main_img.toString('base64'),
+            img1: product.img1.toString('base64'),
+            img2: product.img2.toString('base64'),
+            rate,
         }}));
 
         return result
@@ -104,9 +111,13 @@ class ProductService {
     }
     async getProductsByFilter ({category, price, color, size, style, gender}) {
         let conditions = [];
-        let values = [gender];
-
-        conditions.push(`gender = ?`)
+        let values = [];
+        
+        if(gender !== 'O') {
+            values.push(gender)
+            conditions.push(`gender = ?`)
+        }else conditions.push(`discount IS NOT NULL`)
+        
 
         if (category.length > 0) {
             const categoryPlaceholders = category.map(() => '?').join(', ');

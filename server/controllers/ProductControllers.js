@@ -29,10 +29,10 @@ class ProductController {
         }
     }
 
-    async getProductsByGender (req, res, next) {
+    async getProductsByCategory (req, res, next) {
         try {
-            const genderName = req.params.genderName
-            const products = await ProductService.getProductsByGender(genderName)
+            const categoryName = req.params.categoryName
+            const products = await ProductService.getProductsByCategory(categoryName)
             return res.status(200).json(products)            
         } catch (e) {
             next(e)

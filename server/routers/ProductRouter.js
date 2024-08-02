@@ -25,6 +25,6 @@ router.get('/get-reviews/:productId', ProductControllers.getReviews)
 router.post('/get-filter', ProductControllers.getProductsByFilter)
 router.get('/get-product/:productId', ProductControllers.getProduct)
 router.get('/get-products', ProductControllers.getProducts)
-router.get('/:genderName', ProductControllers.getProductsByGender)
+router.get('/:categoryName', ProductControllers.getProductsByCategory)
 
 module.exports = router

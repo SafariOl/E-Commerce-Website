@@ -5,7 +5,7 @@ class CustomerController {
     async custRegister (req, res, next) {
         try {
             const errors = validationResult(req)
-            if(errors) next()
+            if(errors.length) next(errors)
             const customerTokens = await CustomerService.custRegister(req.body)
             res.cookie("refreshToken", customer.refreshToken, {maxAge: 30 * 24 * 60 * 1000, httpOnly: true})
             return res.status(200).json(customerTokens)
@@ -35,9 +35,7 @@ class CustomerController {
     async custRefresh (req, res, next) {
         try {
             const {refreshToken} = req.cookies
-            if (!refreshToken) {
-                return res.status(401).json({ message: 'Refresh token not found' });
-            }
+            if (!refreshToken) return res.status(401).json({ message: 'Refresh token not found' });
             const customer = await CustomerService.custRefresh(refreshToken)
             res.cookie("refreshToken", customer.refreshToken, {maxAge: 30 * 24 * 60 * 1000, httpOnly: true})
             return res.status(200).json(customer);
@@ -78,7 +76,7 @@ class CustomerController {
     async addAddress (req, res, next) {
         try {
             const errors = validationResult(req)
-            if(errors) next()
+            if(errors.length) next(errors)
             const address = await CustomerService.addAddress(req.body)
             return res.status(200).json(address)
         } catch (e) {
@@ -89,7 +87,7 @@ class CustomerController {
     async editAddress (req, res, next) {
         try {
             const errors = validationResult(req)
-            if(errors) next()
+            if(errors.length) next(errors)
             const address = await CustomerService.editAddress(req.body)
             return res.status(200).json(address)
         } catch (e) {
@@ -120,9 +118,7 @@ class CustomerController {
     async logout (req, res, next) {
         try {
             const {refreshToken} = req.cookies
-            if (!refreshToken) {
-                return res.status(401).json({ message: 'Refresh token not found' });
-            }
+            if (!refreshToken) return res.status(401).json({ message: 'Refresh token not found' });
             await CustomerService.logout(refreshToken)
             res.clearCookie("refreshToken")
             return res.status(200).json()

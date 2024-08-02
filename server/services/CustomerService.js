@@ -9,10 +9,10 @@ const ApiError = require('../exceptions/api-error')
 class CustomerService {
     async custRegister ({user_name, email, password}) {
         const [account] = await sql.query(`
-          SELECT * FROM customers WHERE email = ?  
-        `, [email])
+          SELECT * FROM customers WHERE email = ? OR user_name = ?
+        `, [email, user_name])
 
-        if(account[0]) throw ApiError.BadRequest("Customer with this email already exists")
+        if(account[0]) throw ApiError.BadRequest("Customer with this email Or username already exists")
 
         const customerId = uuid.v4()
         const hashPassword = await bcrypt.hash(password, 3)
