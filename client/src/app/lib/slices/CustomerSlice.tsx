@@ -25,10 +25,8 @@ const CustomerSlice = createSlice({
         builder.addCase(customerRegister.fulfilled, (state, action) => {
             state.loading = false
             state.errors = null
-            if(action.payload && action.payload as ICustomer){
-                state.customer = action.payload
-                localStorage.setItem('token', action.payload.refreshToken)
-            }
+            state.customer = action.payload
+            localStorage.setItem('token', action.payload.refreshToken)
         })
         builder.addCase(customerRegister.rejected, (state, action) => {
             state.loading = false

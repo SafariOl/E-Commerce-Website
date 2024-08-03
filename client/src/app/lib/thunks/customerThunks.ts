@@ -1,11 +1,11 @@
 import $api from "@/app/http"
-import { ICustomerName, ICustomerPassword, IError, ILogin, IRegister } from "@/app/interfaces/Customer"
+import { ICustomer, ICustomerName, ICustomerPassword, IError, ILogin, IRegister } from "@/app/interfaces/Customer"
 import { API_KEY } from "@/app/utils/api"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
 export const customerRegister = createAsyncThunk<
-void,
+ICustomer,
 IRegister,
 {rejectValue: IError}
 >('/src/customerRegister', async(registerInfo, {rejectWithValue}) => {
@@ -18,7 +18,7 @@ IRegister,
 })
 
 export const customerLogin = createAsyncThunk<
-void,
+ICustomer,
 ILogin,
 { rejectValue: IError }
 >('/src/customerLogin', async(loginInfo, { rejectWithValue }) => {
