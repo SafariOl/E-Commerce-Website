@@ -15,9 +15,7 @@ export const ProductModul:FC<IProp> = ({item, categorySelected}) => {
     price = Math.ceil(price)
 
   return (
-    <Link sx={productModulLink} 
-        href={`/shop/${categorySelected ? categorySelected : (gender == 'M') ? 'men' : 'women'}/${product_id}`}
-        >
+    <Link sx={productModulLink} href={`/shop/${categorySelected ? categorySelected : (gender == 'M') ? 'men' : 'women'}/${product_id}`}>
         <Box maxHeight={'298px'} width={'100%'} overflow={'hidden'}>
             <Image quality={100} 
             src={ `data:image/jpeg;base64,${main_img}`} 
@@ -27,7 +25,7 @@ export const ProductModul:FC<IProp> = ({item, categorySelected}) => {
             alt='product-img' loading='lazy'/>
         </Box>
         <Box p={1} overflow={'hidden'}>
-            <Box component={'div'} mb={'8px'} sx={productModulItemName}>{name}</Box>
+            <Typography sx={{...productModulItemName, mb: '8px'}}>{name}</Typography>
             {rate ? 
             <Box sx={{display: 'flex', alignItems: 'center', gap: '10px', mb: '8px'}}>
                 <Rating readOnly size='small' value={rate}/>

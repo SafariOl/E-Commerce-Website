@@ -18,13 +18,9 @@ export default function PaginationComponent()  {
   const items = useAppSelector(state => state.shop.items)
   const count= Math.ceil(items.length / productsPerPage)
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => setPage(value);
   
-  useEffect(() => {
-    dispatch(getProducts(category.split('')[0].toUpperCase()))
-  }, [])
+  useEffect(() => { dispatch(getProducts(category.split('')[0].toUpperCase())) }, [])
 
   return (
     <>

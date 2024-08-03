@@ -139,7 +139,7 @@ export const productModulBox = {
 
 export const productModulItemName = {
     fontSize: {md: 20, xs: 16}, 
-    maxWidth: {md: '250px', xs: '172px'},
+    maxWidth: {md: '245px', xs: '172px'},
     overflow: 'hidden',
     textTransform:'capitalize', 
     whiteSpace: 'nowrap',

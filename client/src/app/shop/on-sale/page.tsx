@@ -9,8 +9,8 @@ export default function OnSaleProductsPage() {
 const [isFilterOpen, setIsFilterOpen] = useState(false)
   return (
     <Box sx={shopMainBox}>
-      <Filters isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
-      <ShopItems isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
+      <Filters isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} category='O'/>
+      <ShopItems isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} />
     </Box>
   )
 }

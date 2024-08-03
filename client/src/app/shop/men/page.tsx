@@ -10,7 +10,7 @@ export default function ShopPage() {
 
   return (
     <Box sx={shopMainBox}>
-      <Filters isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
+      <Filters isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} category="Men"/>
       <ShopItems isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
     </Box>
   )

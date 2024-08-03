@@ -1,9 +1,7 @@
-import { Box, Grid } from '@mui/material'
-import React from 'react'
+import { Box } from '@mui/material'
 import {ProductModul} from './ProductModul'
 import { IProduct } from '../interfaces/Product'
 import { productModulBox } from '../utils/classes'
-import { display, width } from '@mui/system'
 
 interface IProductsProps {
   items: IProduct[] | null

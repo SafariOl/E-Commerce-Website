@@ -1,17 +1,33 @@
 import $api from "@/app/http"
-import { ICustomerName, ICustomerPassword, ILogin, IRegister } from "@/app/interfaces/Customer"
+import { ICustomerName, ICustomerPassword, IError, ILogin, IRegister } from "@/app/interfaces/Customer"
 import { API_KEY } from "@/app/utils/api"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
-export const customerRegister = createAsyncThunk('/src/customerRegister', async(registerInfo:IRegister) => {
-    const res = await $api.post(`${API_KEY}/customers/register`, {...registerInfo})
-    return res.data
+export const customerRegister = createAsyncThunk<
+void,
+IRegister,
+{rejectValue: IError}
+>('/src/customerRegister', async(registerInfo, {rejectWithValue}) => {
+    try {
+        const res = await $api.post(`${API_KEY}/customers/register`, {...registerInfo})
+        return res.data
+    } catch (err:any) {
+        return rejectWithValue({ message: err.response.data.message, status: err.response?.status });
+    }
 })
 
-export const customerLogin = createAsyncThunk('/src/customerLogin', async(loginInfo:ILogin) => {
-    const res = await $api.post(`${API_KEY}/customers/login`, {...loginInfo})
-    return res.data
+export const customerLogin = createAsyncThunk<
+void,
+ILogin,
+{ rejectValue: IError }
+>('/src/customerLogin', async(loginInfo, { rejectWithValue }) => {
+    try {
+        const res = await $api.post(`${API_KEY}/customers/login`, {...loginInfo})
+        return res.data
+    } catch (err:any) {
+        return rejectWithValue({ message: err.response.data.message, status: err.response?.status });
+    }
 })
 
 export const activate = createAsyncThunk('/src/activate', async(activationLink:string) => {

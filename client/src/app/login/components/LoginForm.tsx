@@ -1,3 +1,4 @@
+import PasswordField from '@/app/components/PasswordField'
 import { ILogin } from '@/app/interfaces/Customer'
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks'
 import { customerLogin } from '@/app/lib/thunks/customerThunks'
@@ -13,21 +14,20 @@ export default function LoginForm() {
     const [password, setPassword] = useState<string>('')
     const customer = useAppSelector(state => state.customer.customer)
     const router = useRouter()
+    const [error, setError] = useState<string>("")
+    const errors = useAppSelector(state => state.customer.errors)
 
     useEffect(() => {
-        if(customer) {
-            router.back()
-        }
+        customer && router.back()
     }, [customer])
 
     const handleLogin = () => {
-        if(!email || !password) return
-
-        const customer:ILogin = {
-            email: email,
-            password: password
+        if(!email || !password) {
+            setTimeout(() => {setError("")}, 3000)
+            return setError("Something went wrong")
         }
-        dispatch(customerLogin(customer))
+
+        dispatch(customerLogin({email, password}))
     }
 
   return (
@@ -37,12 +37,12 @@ export default function LoginForm() {
         bgcolor="#ffffff"
         boxShadow={2}
         borderRadius={2}
-    >
-        <Typography variant="h4" component="h1" gutterBottom>
-            Login
-        </Typography>
+        position={'relative'}
+        >
+        <Typography variant="h4" component="h1" gutterBottom> Login </Typography>
+        {(errors || error) && <Typography variant='body1' sx={{color:'red', position: 'absolute', top: 0}}>{errors || error}</Typography>}
         <TextField onChange={e => setEmail(e.target.value)} label="Email" variant="outlined" fullWidth margin="normal" />
-        <TextField onChange={e => setPassword(e.target.value)} label="Password" variant="outlined" type="password" fullWidth margin="normal" />
+        <PasswordField setPassword={setPassword}/>
         <Button onClick={handleLogin} sx={{...siteBtn, mt: '4vh'}} variant="contained" color="primary" fullWidth>
             Login
         </Button>

@@ -7,14 +7,13 @@ import { removeCategory, removeColor, removeStyle, setCategory, setColor, setSty
 import { colors, dressStyleList, itemsList } from '@/app/utils/lists'
 import CheckIcon from '@mui/icons-material/Check';
 
-
 export default function FilterListItem({item}:{item: string}) {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const filter = useAppSelector(state => state.filter)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if(!filter.category.length && !filter.color.length && !filter.size.length && !filter.style.length) setIsChecked(false)
+    (!filter.category.length && !filter.color.length && !filter.size.length && !filter.style.length) && setIsChecked(false)
   }, [filter])
 
   const handleChange = () => {

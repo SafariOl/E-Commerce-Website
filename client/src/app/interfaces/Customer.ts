@@ -11,6 +11,11 @@ export interface ICustomer {
     customer: ICustomerInfo
 }
 
+export interface IError {
+    message: string
+    status?: number
+}
+
 export interface IRegister {
     user_name: string
     email: string

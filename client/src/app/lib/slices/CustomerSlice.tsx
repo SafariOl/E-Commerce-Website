@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ICustomer } from "../../interfaces/Customer";
+import { ICustomer, IError } from "../../interfaces/Customer";
 import { activate, changeName, changePassword, customerLogin, customerRegister, logout, refresh } from "../thunks/customerThunks";
 
 
@@ -7,7 +7,7 @@ import { activate, changeName, changePassword, customerLogin, customerRegister, 
 interface IState {
     customer: ICustomer | null,
     loading: boolean,
-    errors: unknown | null
+    errors: string | null
 }
 
 const initialState:IState = {
@@ -25,12 +25,17 @@ const CustomerSlice = createSlice({
         builder.addCase(customerRegister.fulfilled, (state, action) => {
             state.loading = false
             state.errors = null
-            state.customer = action.payload
-            localStorage.setItem('token', action.payload.refreshToken)
+            if(action.payload && action.payload as ICustomer){
+                state.customer = action.payload
+                localStorage.setItem('token', action.payload.refreshToken)
+            }
         })
         builder.addCase(customerRegister.rejected, (state, action) => {
             state.loading = false
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
 
         /////////////////////
@@ -44,7 +49,10 @@ const CustomerSlice = createSlice({
         })
         builder.addCase(customerLogin.rejected, (state, action) => {
             state.loading = false
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
 
         //////////////
@@ -58,7 +66,10 @@ const CustomerSlice = createSlice({
         })
         builder.addCase(activate.rejected, (state, action) => {
             state.loading = false
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
 
         //////////////
@@ -74,7 +85,10 @@ const CustomerSlice = createSlice({
         builder.addCase(refresh.rejected, (state, action) => {
             state.loading = false
             state.customer = null
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
 
         builder.addCase(changeName.pending, (state) => {state.loading = true})
@@ -86,7 +100,10 @@ const CustomerSlice = createSlice({
         })
         builder.addCase(changeName.rejected, (state, action) => {
             state.loading = false
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
 
         builder.addCase(logout.pending, (state) => {state.loading = true})
@@ -98,7 +115,10 @@ const CustomerSlice = createSlice({
         })
         builder.addCase(logout.rejected, (state, action) => {
             state.loading = false
-            state.errors = action.payload
+            if(action.payload) {
+                const errorPayload = action.payload as IError;
+                state.errors = errorPayload.message
+            }
         })
     }
 })

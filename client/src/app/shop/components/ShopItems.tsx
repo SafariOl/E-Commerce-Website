@@ -8,6 +8,15 @@ import { usePathname } from 'next/navigation'
 import useBreadcrumbs from '@/app/hooks/useBreadcrumbs';
 import MobilePageHeaderField from './MobilePageHeaderField'
 
+const paginationContainer = {
+    width: 'fit-content',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+    margin: '1em auto 0'
+}
+
 export default function ShopItems({isFilterOpen, setIsFilterOpen} :{isFilterOpen: boolean, setIsFilterOpen: (val: boolean) => void}) {    
     const loading = useAppSelector(state => state.shop.loading)
     const pathname = usePathname()
@@ -22,14 +31,7 @@ export default function ShopItems({isFilterOpen, setIsFilterOpen} :{isFilterOpen
                     <BasicBreadcrumbs links={breadcrumbs.links} text={convertedText}/>
                     <MobilePageHeaderField isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}/>
                 </Box>
-                <Box sx={{
-                    width: 'fit-content',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    height: '100%',
-                    margin: '1em auto 0'
-                }}>
+                <Box sx={paginationContainer}>
                     <PaginationComponent/>
                 </Box>
             </Box>

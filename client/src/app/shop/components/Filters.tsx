@@ -1,6 +1,6 @@
 'use client'
 import { Box, Button, Typography } from '@mui/material'
-import * as React from 'react'
+import { useLayoutEffect } from 'react'
 import theme from '@/app/theme';
 import FilterAccordion from './FilterAccordion';
 import FilterItems from './FilterItems';
@@ -9,10 +9,10 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { usePathname } from 'next/navigation';
 import { clearFilter, setGender } from '@/app/lib/slices/FilterSlice';
-import { getFilteredItems } from '@/app/lib/thunks/shopThunks';
+import { getFilteredItems, getProducts } from '@/app/lib/thunks/shopThunks';
 import { filtersMainBox } from '@/app/utils/classes';
 
-const btnClass = {
+const applyBtn = {
   bgcolor: '#000',
   width: '100%', 
   color: '#fff',
@@ -21,23 +21,26 @@ const btnClass = {
     bgcolor: '#3a3a3a'
   }
 }
-
-interface IProp {
-  isFilterOpen: boolean | false
-  setIsFilterOpen: (value: boolean) => void
+const clearBtn = {
+  bgcolor: 'transparent', 
+  color: '#000', 
+  border: '1px solid #000', 
+  width: '100%', 
+  mb: '1em'
 }
 
-export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
+export default function Filters({isFilterOpen, setIsFilterOpen, category}:{
+  isFilterOpen: boolean | false, setIsFilterOpen: (value: boolean) => void, category: string
+}) {
   const dispatch = useAppDispatch()
   const filter = useAppSelector(state => state.filter)
   const pathname = usePathname()
 
-  React.useLayoutEffect(() => {
-    dispatch(setGender(pathname.slice(6, pathname.length).split('')[0].toUpperCase()))
-  }, [])
+  useLayoutEffect(() => { dispatch(setGender(pathname.slice(6, pathname.length).split('')[0].toUpperCase())) }, [])
 
   const handleCancel = () => {
     dispatch(clearFilter())
+    location.reload()
   }
 
   const handleClick = () => {
@@ -46,9 +49,7 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
   }
 
   return (
-    <Box sx={{
-      ...filtersMainBox, 
-      mb: 5,
+    <Box sx={{...filtersMainBox, mb: 5,
       [theme.breakpoints.down('lg')]:{ display: isFilterOpen ? 'block' : 'none'},
     }}>
       <div>
@@ -56,23 +57,20 @@ export default function Filters({isFilterOpen, setIsFilterOpen}:IProp) {
           <Typography variant='h3' fontSize={20} textTransform={'capitalize'}>Filters</Typography>
           <TuneIcon sx={{
             [theme.breakpoints.down('lg')]: { display: 'none'},
-            rotate: '90deg',
-            color: '#9a9a9a'
+            rotate: '90deg', color: '#9a9a9a'
           }}/>
           <Button sx={{[theme.breakpoints.up('lg')] : {display: 'none'}}}
            onClick={() => setIsFilterOpen(false)}>
-            <CloseIcon sx={{
-              color: '#000'
-            }} />
+            <CloseIcon sx={{color: '#000'}}/>
           </Button>
         </Box>
         <FilterItems />
         <FilterAccordion />
       </div>
       <div>
-        {(filter.category.length || filter.color.length || 
-        filter.size.length || filter.style.length ) ? <Button onClick={handleCancel} sx={{bgcolor: 'transparent', color: '#000', border: '1px solid #000', width: '100%', mb: '1em'}}>Clear All</Button> : null}
-        <Button onClick={handleClick} sx={btnClass}>Apply Filter</Button>
+        {(filter.category.length || filter.color.length || filter.size.length || filter.style.length ) ? 
+        <Button onClick={handleCancel} sx={clearBtn}>Clear All</Button> : null}
+        <Button onClick={handleClick} sx={applyBtn}>Apply Filter</Button>
       </div>
     </Box>
   )
