@@ -45,7 +45,7 @@ class CustomerService {
         `, [email])
         if(!customer[0]) throw ApiError.UnauthorizedError()
         const checkPassword = await bcrypt.compare(password, customer[0].password)
-        if(!checkPassword) throw ApiError("Incorrect Password!")
+        if(!checkPassword) throw ApiError.BadRequest("Incorrect password!")
         
         const customerData = new CustomerDto(customer[0])
         const tokens = await TokenService.generateTokens({...customerData})
