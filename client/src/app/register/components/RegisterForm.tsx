@@ -19,7 +19,7 @@ export default function RegisterForm() {
     const router = useRouter()
     
     const handleRegister = () => {
-        if(!username || !email || !password) return
+        if(!username || !email || !password) return setError("Enter all fields")
         else if(password.length < 8) return setError("Password length should be at list 8 symbols")
         const customer:IRegister = {
             user_name: username,

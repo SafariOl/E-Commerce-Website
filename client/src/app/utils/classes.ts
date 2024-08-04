@@ -1,6 +1,7 @@
 import { alpha, InputBase, styled } from "@mui/material";
 import theme from "../theme";
 import Image from "next/image";
+import { minWidth, width } from "@mui/system";
 
 export const justifyCenterBlock = {
     display: 'flex',
@@ -120,7 +121,8 @@ export const headerShopAccordBox = {
 export const productModulLink = {
     color: '#000', 
     textDecoration: 'none', 
-    width: '250px',
+    maxWidth: '250px',
+    width: '100%',
     display: 'flex', 
     flexDirection: 'column', 
     alignItems: 'start', 

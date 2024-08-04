@@ -18,12 +18,14 @@ const container = {
 
 export default function ProductsModul({items, category}:IProductsProps) {
   return (
-    <Box sx={container}>
-        {items && items.map(item =>
-          <Box  sx={{...productModulBox, p: '15px 5px', mx: '15px', mb: "36px"}} key={item.product_id}>
-            <ProductModul item={item} categorySelected={category} />
-          </Box> 
-        )}
+    <Box sx={{m: '0 auto'}}>
+      <Box sx={container}>
+          {items && items.map(item =>
+            <Box  sx={{...productModulBox, p: '15px 5px', mx: '15px', mb: "36px"}} key={item.product_id}>
+              <ProductModul item={item} categorySelected={category} />
+            </Box> 
+          )}
+      </Box>
     </Box>
   )
 }
